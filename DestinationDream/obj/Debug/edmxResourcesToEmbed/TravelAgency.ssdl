@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Cities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="StateId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblAgent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="AgentCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="MobileNo" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblCompanyType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblContract">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="AgentId" Type="int" />
+    <Property Name="OfferId" Type="int" />
+    <Property Name="TimeSigned" Type="time" Precision="7" />
+    <Property Name="TotalPrice" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="PaymentDate" Type="date" />
+    <Property Name="Paid" Type="bit" />
+    <Property Name="PaymentTime" Type="time" Precision="7" />
+    <Property Name="PaymentAmount" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="Refunded" Type="bit" />
+    <Property Name="RefundedTime" Type="time" Precision="7" />
+    <Property Name="RefundedAmount" Type="decimal" Precision="10" Scale="0" />
+  </EntityType>
+  <EntityType Name="tblCountries">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblCustomer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblHotel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="text" />
+    <Property Name="Is_Partner" Type="bit" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblHotelServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="RoomTypeId" Type="int" />
+    <Property Name="ServicePrice" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Route" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblOffer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="date" />
+    <Property Name="ActiveFrom" Type="date" />
+    <Property Name="ActiveTo" Type="date" />
+    <Property Name="TimeAccepted" Type="date" />
+    <Property Name="Accepted" Type="bit" />
+    <Property Name="PromoOfferId" Type="int" />
+    <Property Name="AgentId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblOfferHotelServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="OfferId" Type="int" />
+    <Property Name="HotelServiceId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="DiscountPer" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="FinalServicesPrice" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="Discrption" Type="text" />
+  </EntityType>
+  <EntityType Name="tblOfferTransportServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="OfferId" Type="int" />
+    <Property Name="TransportServiceId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="DiscountPer" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="FinalServicePrice" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="Discription" Type="text" />
+  </EntityType>
+  <EntityType Name="tblPromoOffer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="ActiveFrom" Type="date" />
+    <Property Name="ActiveTo" Type="date" />
+  </EntityType>
+  <EntityType Name="tblPromoOfferHotelServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="PromoOfferId" Type="int" />
+    <Property Name="HotelServiceId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="DiscountPer" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="FinalServicePrice" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="Discription" Type="text" />
+  </EntityType>
+  <EntityType Name="tblPromoOfferTransportServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="PromoOfferId" Type="int" />
+    <Property Name="TransportServiceId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="DiscountPer" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="FinalServiceId" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="Dsicription" Type="text" />
+  </EntityType>
+  <EntityType Name="tblRoomType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="RoomType" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblState">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CountryId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblTicketType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblTransportCompany">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="HQAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyTypeId" Type="int" />
+    <Property Name="Description" Type="text" />
+    <Property Name="IsPartner" Type="bit" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblTransportServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="TransportCompanyId" Type="int" />
+    <Property Name="TicketTypeId" Type="int" />
+    <Property Name="FromCityId" Type="int" />
+    <Property Name="ToCityId" Type="int" />
+    <Property Name="ServicePrice" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <Association Name="FK_tbl_Cities_tblState">
+    <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblState">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_Cities">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblContract_tblAgent">
+    <End Role="tblAgent" Type="Self.tblAgent" Multiplicity="0..1" />
+    <End Role="tblContract" Type="Self.tblContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAgent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblContract">
+        <PropertyRef Name="AgentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblContract_tblCustomer">
+    <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+    <End Role="tblContract" Type="Self.tblContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblContract">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblHotel_tbl_Cities">
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="0..1" />
+    <End Role="tblHotel" Type="Self.tblHotel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Cities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblHotel">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblHotelServices_tblHotel">
+    <End Role="tblHotel" Type="Self.tblHotel" Multiplicity="0..1" />
+    <End Role="tblHotelServices" Type="Self.tblHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblHotel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblHotelServices">
+        <PropertyRef Name="HotelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblHotelServices_tblRoomType">
+    <End Role="tblRoomType" Type="Self.tblRoomType" Multiplicity="0..1" />
+    <End Role="tblHotelServices" Type="Self.tblHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRoomType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblHotelServices">
+        <PropertyRef Name="RoomTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOffer_tblAgent">
+    <End Role="tblAgent" Type="Self.tblAgent" Multiplicity="0..1" />
+    <End Role="tblOffer" Type="Self.tblOffer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAgent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOffer">
+        <PropertyRef Name="AgentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOffer_tblCustomer">
+    <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+    <End Role="tblOffer" Type="Self.tblOffer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOffer">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOffer_tblPromoOffer">
+    <End Role="tblPromoOffer" Type="Self.tblPromoOffer" Multiplicity="0..1" />
+    <End Role="tblOffer" Type="Self.tblOffer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPromoOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOffer">
+        <PropertyRef Name="PromoOfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOfferHotelServices_tblHotelServices">
+    <End Role="tblHotelServices" Type="Self.tblHotelServices" Multiplicity="0..1" />
+    <End Role="tblOfferHotelServices" Type="Self.tblOfferHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblHotelServices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOfferHotelServices">
+        <PropertyRef Name="HotelServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOfferHotelServices_tblOffer">
+    <End Role="tblOffer" Type="Self.tblOffer" Multiplicity="0..1" />
+    <End Role="tblOfferHotelServices" Type="Self.tblOfferHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOfferHotelServices">
+        <PropertyRef Name="OfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOfferTransportServices_tblOffer">
+    <End Role="tblOffer" Type="Self.tblOffer" Multiplicity="0..1" />
+    <End Role="tblOfferTransportServices" Type="Self.tblOfferTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOfferTransportServices">
+        <PropertyRef Name="OfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOfferTransportServices_tblTransportServices">
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="0..1" />
+    <End Role="tblOfferTransportServices" Type="Self.tblOfferTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTransportServices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblOfferTransportServices">
+        <PropertyRef Name="TransportServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPromoOfferHotelServices_tblHotelServices">
+    <End Role="tblHotelServices" Type="Self.tblHotelServices" Multiplicity="0..1" />
+    <End Role="tblPromoOfferHotelServices" Type="Self.tblPromoOfferHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblHotelServices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPromoOfferHotelServices">
+        <PropertyRef Name="HotelServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPromoOfferHotelServices_tblPromoOffer">
+    <End Role="tblPromoOffer" Type="Self.tblPromoOffer" Multiplicity="0..1" />
+    <End Role="tblPromoOfferHotelServices" Type="Self.tblPromoOfferHotelServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPromoOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPromoOfferHotelServices">
+        <PropertyRef Name="PromoOfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPromoOfferTransportServices_tblPromoOffer">
+    <End Role="tblPromoOffer" Type="Self.tblPromoOffer" Multiplicity="0..1" />
+    <End Role="tblPromoOfferTransportServices" Type="Self.tblPromoOfferTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPromoOffer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPromoOfferTransportServices">
+        <PropertyRef Name="PromoOfferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPromoOfferTransportServices_tblTransportServices">
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="0..1" />
+    <End Role="tblPromoOfferTransportServices" Type="Self.tblPromoOfferTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTransportServices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblPromoOfferTransportServices">
+        <PropertyRef Name="TransportServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblState_tblCountries">
+    <End Role="tblCountries" Type="Self.tblCountries" Multiplicity="0..1" />
+    <End Role="tblState" Type="Self.tblState" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountries">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblState">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportCompany_tbl_Cities">
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="0..1" />
+    <End Role="tblTransportCompany" Type="Self.tblTransportCompany" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Cities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportCompany">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportCompany_tblCompanyType">
+    <End Role="tblCompanyType" Type="Self.tblCompanyType" Multiplicity="0..1" />
+    <End Role="tblTransportCompany" Type="Self.tblTransportCompany" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCompanyType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportCompany">
+        <PropertyRef Name="CompanyTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportServices_tbl_Cities">
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="0..1" />
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Cities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportServices">
+        <PropertyRef Name="FromCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportServices_tbl_Cities1">
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="0..1" />
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Cities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportServices">
+        <PropertyRef Name="ToCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportServices_tblTicketType">
+    <End Role="tblTicketType" Type="Self.tblTicketType" Multiplicity="0..1" />
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTicketType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportServices">
+        <PropertyRef Name="TicketTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransportServices_tblTransportCompany">
+    <End Role="tblTransportCompany" Type="Self.tblTransportCompany" Multiplicity="0..1" />
+    <End Role="tblTransportServices" Type="Self.tblTransportServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTransportCompany">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblTransportServices">
+        <PropertyRef Name="TransportCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TravelAgencyModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Cities" EntityType="Self.tbl_Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAgent" EntityType="Self.tblAgent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCompanyType" EntityType="Self.tblCompanyType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblContract" EntityType="Self.tblContract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCountries" EntityType="Self.tblCountries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblHotel" EntityType="Self.tblHotel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblHotelServices" EntityType="Self.tblHotelServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOffer" EntityType="Self.tblOffer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOfferHotelServices" EntityType="Self.tblOfferHotelServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOfferTransportServices" EntityType="Self.tblOfferTransportServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPromoOffer" EntityType="Self.tblPromoOffer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPromoOfferHotelServices" EntityType="Self.tblPromoOfferHotelServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPromoOfferTransportServices" EntityType="Self.tblPromoOfferTransportServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRoomType" EntityType="Self.tblRoomType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTicketType" EntityType="Self.tblTicketType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTransportCompany" EntityType="Self.tblTransportCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTransportServices" EntityType="Self.tblTransportServices" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbl_Cities_tblState" Association="Self.FK_tbl_Cities_tblState">
+      <End Role="tblState" EntitySet="tblState" />
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblContract_tblAgent" Association="Self.FK_tblContract_tblAgent">
+      <End Role="tblAgent" EntitySet="tblAgent" />
+      <End Role="tblContract" EntitySet="tblContract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblContract_tblCustomer" Association="Self.FK_tblContract_tblCustomer">
+      <End Role="tblCustomer" EntitySet="tblCustomer" />
+      <End Role="tblContract" EntitySet="tblContract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblHotel_tbl_Cities" Association="Self.FK_tblHotel_tbl_Cities">
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+      <End Role="tblHotel" EntitySet="tblHotel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblHotelServices_tblHotel" Association="Self.FK_tblHotelServices_tblHotel">
+      <End Role="tblHotel" EntitySet="tblHotel" />
+      <End Role="tblHotelServices" EntitySet="tblHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblHotelServices_tblRoomType" Association="Self.FK_tblHotelServices_tblRoomType">
+      <End Role="tblRoomType" EntitySet="tblRoomType" />
+      <End Role="tblHotelServices" EntitySet="tblHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOffer_tblAgent" Association="Self.FK_tblOffer_tblAgent">
+      <End Role="tblAgent" EntitySet="tblAgent" />
+      <End Role="tblOffer" EntitySet="tblOffer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOffer_tblCustomer" Association="Self.FK_tblOffer_tblCustomer">
+      <End Role="tblCustomer" EntitySet="tblCustomer" />
+      <End Role="tblOffer" EntitySet="tblOffer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOffer_tblPromoOffer" Association="Self.FK_tblOffer_tblPromoOffer">
+      <End Role="tblPromoOffer" EntitySet="tblPromoOffer" />
+      <End Role="tblOffer" EntitySet="tblOffer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOfferHotelServices_tblHotelServices" Association="Self.FK_tblOfferHotelServices_tblHotelServices">
+      <End Role="tblHotelServices" EntitySet="tblHotelServices" />
+      <End Role="tblOfferHotelServices" EntitySet="tblOfferHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOfferHotelServices_tblOffer" Association="Self.FK_tblOfferHotelServices_tblOffer">
+      <End Role="tblOffer" EntitySet="tblOffer" />
+      <End Role="tblOfferHotelServices" EntitySet="tblOfferHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOfferTransportServices_tblOffer" Association="Self.FK_tblOfferTransportServices_tblOffer">
+      <End Role="tblOffer" EntitySet="tblOffer" />
+      <End Role="tblOfferTransportServices" EntitySet="tblOfferTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOfferTransportServices_tblTransportServices" Association="Self.FK_tblOfferTransportServices_tblTransportServices">
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+      <End Role="tblOfferTransportServices" EntitySet="tblOfferTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPromoOfferHotelServices_tblHotelServices" Association="Self.FK_tblPromoOfferHotelServices_tblHotelServices">
+      <End Role="tblHotelServices" EntitySet="tblHotelServices" />
+      <End Role="tblPromoOfferHotelServices" EntitySet="tblPromoOfferHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPromoOfferHotelServices_tblPromoOffer" Association="Self.FK_tblPromoOfferHotelServices_tblPromoOffer">
+      <End Role="tblPromoOffer" EntitySet="tblPromoOffer" />
+      <End Role="tblPromoOfferHotelServices" EntitySet="tblPromoOfferHotelServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPromoOfferTransportServices_tblPromoOffer" Association="Self.FK_tblPromoOfferTransportServices_tblPromoOffer">
+      <End Role="tblPromoOffer" EntitySet="tblPromoOffer" />
+      <End Role="tblPromoOfferTransportServices" EntitySet="tblPromoOfferTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPromoOfferTransportServices_tblTransportServices" Association="Self.FK_tblPromoOfferTransportServices_tblTransportServices">
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+      <End Role="tblPromoOfferTransportServices" EntitySet="tblPromoOfferTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblState_tblCountries" Association="Self.FK_tblState_tblCountries">
+      <End Role="tblCountries" EntitySet="tblCountries" />
+      <End Role="tblState" EntitySet="tblState" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportCompany_tbl_Cities" Association="Self.FK_tblTransportCompany_tbl_Cities">
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+      <End Role="tblTransportCompany" EntitySet="tblTransportCompany" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportCompany_tblCompanyType" Association="Self.FK_tblTransportCompany_tblCompanyType">
+      <End Role="tblCompanyType" EntitySet="tblCompanyType" />
+      <End Role="tblTransportCompany" EntitySet="tblTransportCompany" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportServices_tbl_Cities" Association="Self.FK_tblTransportServices_tbl_Cities">
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportServices_tbl_Cities1" Association="Self.FK_tblTransportServices_tbl_Cities1">
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportServices_tblTicketType" Association="Self.FK_tblTransportServices_tblTicketType">
+      <End Role="tblTicketType" EntitySet="tblTicketType" />
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransportServices_tblTransportCompany" Association="Self.FK_tblTransportServices_tblTransportCompany">
+      <End Role="tblTransportCompany" EntitySet="tblTransportCompany" />
+      <End Role="tblTransportServices" EntitySet="tblTransportServices" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
