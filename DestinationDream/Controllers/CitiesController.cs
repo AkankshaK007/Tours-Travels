@@ -13,6 +13,7 @@ namespace DestinationDream.Controllers
         public ActionResult Add()
         {
             ViewBag.msg = CommonRepo.GetState();
+
             return View();
         }
     }

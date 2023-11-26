@@ -1,8 +1,10 @@
 ﻿using DestinationDream.IServices;
+using DestinationDream.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DestinationDream.Services
 {
@@ -32,13 +34,17 @@ namespace DestinationDream.Services
             return db.tbl_Cities.ToList();
         }
 
-        public string Save(tbl_Cities obj)
+
+        [HttpPost]
+        public string Save(Cities obj)
         {
             try
             {
                 if (obj.Id==0)
                 {
                     tbl_Cities list = new tbl_Cities();
+
+                    list.Id = 1;
                     list.Name = obj.Name;
                     list.StateId = obj.StateId;
                     db.tbl_Cities.Add(list);
@@ -48,6 +54,7 @@ namespace DestinationDream.Services
                 else
                 {
                     var o = db.tbl_Cities.Find(obj.Id);
+                    o.Id = obj.Id;
                     o.Name = obj.Name;
                     o.StateId = obj.StateId;
                     db.tbl_Cities.Attach(o);
@@ -58,11 +65,13 @@ namespace DestinationDream.Services
                 }
                
             }
-            catch (Exception)
+            catch (Exception er)
             {
 
-                throw;
+                
             }
+            return "";
+
         }
     }
 }

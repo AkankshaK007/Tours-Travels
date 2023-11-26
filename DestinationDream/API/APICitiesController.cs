@@ -21,12 +21,12 @@ namespace DestinationDream.API
             var config = new MapperConfiguration(m => m.CreateMap<Cities, tbl_Cities>().ReverseMap());
 
         }
-
+        [HttpPost]
         public JsonResult Save(Cities M)
         {
             ResponseModel res = new ResponseModel();
-            tbl_Cities obj = mp.Map<tbl_Cities>(M);
-            var O = c.Save(obj);
+            
+            var O = c.Save(M);
             res.Code = 0;
             res.Message = O;
             return Json (res, JsonRequestBehavior.AllowGet);

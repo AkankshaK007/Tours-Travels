@@ -48,5 +48,7 @@ namespace DestinationDream
         public virtual DbSet<tblTransportService> tblTransportServices { get; set; }
 
         public System.Data.Entity.DbSet<DestinationDream.Models.Cities> Cities { get; set; }
+
+        public System.Data.Entity.DbSet<DestinationDream.Models.Countries> Countries { get; set; }
     }
 }

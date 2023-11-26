@@ -6,15 +6,14 @@ using System.Web;
 
 namespace DestinationDream.IServices
 {
-    public interface ICities
+    public interface ICountry
     {
-        List<tbl_Cities> GetAll();
+        List<tblCountry> GetAll();
 
-        tbl_Cities Find(int id);
+        tblCountry Find(int id);
 
         bool Delete(int id);
 
-        string Save(Cities obj);
-
+        bool Save(Countries obj);
     }
 }

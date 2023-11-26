@@ -5,69 +5,138 @@
     Layout = "~/Views/Shared/ChildLayout.cshtml";
 }
 
-<script>
-    $(document).ready(function () {
-        $("#Save").click(function () {
-            var obj = {
+
+
+    <script>
+        $(document).ready(function () {
+            $("#Save").click(function () {
+
+
+
+               var obj = {
+                 "Id": $("#Id").val(),
                 "Name": $("#Name").val(),
                 "StateId": $("#StateId").val(),
-                "Id": $("#Id").val()
+               
             }
+                $.ajax({
+                    "url": "/APICities/Save",
+                    "method": "post",
+                    "contentType": "application/json",
+                    "data": JSON.stringify(obj),
 
-            console.log(JSON.stringify(obj));
+                    success: function (data) {
+
+
+                    },
+                    error: function (err) { console.log(err); }
+                });
+
+
+            });
+
+
+        });
+    </script>
+
+
+@*<script>
+    $(document).ready(function () {
+        $("#Save").click(function () {
+
+            var obj = {
+                 "Id": $("#Id").val(),
+                "Name": $("#Name").val(),
+                "StateId": $("#StateId").val(),
+               
+            }
             $.ajax({
                 "url": "/APICities/Save",
                 "method": "post",
-                "ContentType": "application/json",
+                "contentType": "application/json",
                 "data": JSON.stringify(obj),
-                success: function (data) {
-                    if (data.Code == 0) {
-                        alert(data.Message);
-                    }
-                },
-                error: function (err) {
 
-                }
-            })
+                success: function (data) {
+                },
+                error: function (err) { console.log(err); }
+            });
+
 
         });
 
-        
+
     });
-</script>
+</script>*@
 
+<div class="row">
 
+    <div class="col-4">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Cities</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
-
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
     </div>
+    <div class="col-4">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StateId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="form-horizontal">
+            <br />
+            <h4><b>Cities</b></h4>
+            <hr />
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 m-2">
-                <input type="button" id="Save" value="Add" class="btn btn-success" />
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
             </div>
+            <br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.StateId, (IEnumerable<SelectListItem>)ViewBag.msg, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-4">
+
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-5">
+                            <input type="button" id="Save" value="Add" class="btn btn-success" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                </div>
+            </div>
+            <br />
         </div>
+        }
     </div>
-}
+    <div class="col-4">
+
+    </div>
+   
+    <div class="row p-2 m-2">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Operations</th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
