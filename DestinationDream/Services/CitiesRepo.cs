@@ -22,19 +22,26 @@ namespace DestinationDream.Services
             }
             return false;
         }
-
-        public tbl_Cities Find(int id)
+        public dynamic FindS(int id)
         {
-            var obj = db.tbl_Cities.Find(id);
-            return obj;
-        }
+            var obj = db.tbl_Cities.Select(s => new { s.Id, s.Name, s.StateId }).Where(w => w.Id == id).FirstOrDefault();
+            if (obj != null)
+            {
+                return obj;
+            }
+            return null;
 
-        public List<tbl_Cities> GetAll()
+        }
+        public dynamic GetAllc(int pageno)
         {
-            return db.tbl_Cities.ToList();
+            var objList = db.tbl_Cities.Select(s => new { s.Id, s.Name, StateId= s.tblState.Name }).OrderBy(o => o.Id).Skip(4 * pageno).Take(4).ToList();
+            return objList;
         }
-
-
+        public dynamic GetAll(string key)
+        {
+            var objList = db.tbl_Cities.Select(s => new { s.Id, s.Name, StateId = s.tblState.Name }).Where(w => w.Name.Contains(key)).ToList();
+            return objList;
+        }
         [HttpPost]
         public string Save(Cities obj)
         {
@@ -44,7 +51,7 @@ namespace DestinationDream.Services
                 {
                     tbl_Cities list = new tbl_Cities();
 
-                    list.Id = 1;
+                    list.Id = 5;
                     list.Name = obj.Name;
                     list.StateId = obj.StateId;
                     db.tbl_Cities.Add(list);
@@ -61,11 +68,9 @@ namespace DestinationDream.Services
                     db.Entry(o).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return "Updated Successfully";
-
-                }
-               
+                }  
             }
-            catch (Exception er)
+            catch (Exception )
             {
 
                 
@@ -75,3 +80,5 @@ namespace DestinationDream.Services
         }
     }
 }
+
+

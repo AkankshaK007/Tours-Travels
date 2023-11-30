@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DestinationDream.IServices
 {
-    public interface ICities
+    public interface IState
     {
         dynamic GetAllc(int pageno);
 
@@ -15,7 +15,7 @@ namespace DestinationDream.IServices
 
         bool Delete(int id);
 
-        string Save(Cities obj);
+        string Save(State obj);
 
     }
 }

@@ -5,122 +5,266 @@
     Layout = "~/Views/Shared/ChildLayout.cshtml";
 }
 
-    <script>
+<script>
     $(document).ready(function () {
+        LoadCountry(0);
+
         $("#Save").click(function () {
-          
-          
-
+           
             var obj = {
-
                 "Id": $("#Id").val(),
                 "Code": $("#Code").val(),
                 "Name": $("#Name").val(),
-              
-               
-                 
-
 
             }
             $.ajax({
-                "url": "/APICountry/Save",
+                "url": "/Country/Save",
                 "method": "post",
                 "contentType": "application/json",
                 "data": JSON.stringify(obj),
 
                 success: function (data) {
-
-                   
-                   
-
-
-                   
-
+                    
+                 
+                    alert(data.Message);
+                    LoadCountry(0);
                 },
                 error: function (err) { console.log(err); }
             });
 
 
         });
-        alert("Ak");
 
+        $("#btnRefresh").click(function () {
+            LoadCountry();
+        });
+
+        $("#txtSearch").keyup(function () {
+            $.ajax(
+                {
+                    "url": "/Country/GetAll?key=" + $("#txtSearch").val(),
+                    "method": "get",
+
+                    success: function (data) {
+                        if (data.Code == 0) {
+                            $("#CountryTable").empty();
+                            $.each(data.Message, function (index, item) {
+                                $("#CountryTable").append("<tr><td><button onclick='Edit(" + item.Id + ")'>Edit</button><button onclick='Delete(" + item.Id + ")'>Delete</button></td><td>" + item.Id + "</td><td>" + item.Code + "</td><td>" + item.Name + "</td></tr>");
+                            });
+                        }
+                    },
+                    error: function (message) 
+                    {
+                        console.log(message);
+                    }
+                }
+            );
+        });
 
     });
-    </script>
+
+
+    function LoadCountry(pageno) {
+
+        $.ajax({
+
+            "url": "/Country/GetAllc?pageno="+pageno,
+            "method": "get",
+            success: function (data) {
+                if (data.Code == 0) {
+                    $("#CountryTable").empty();
+                    $.each(data.Message, function (Add, item) {
+                         previous = data.pageno - 1;
+                    Next = data.pageno + 1;
+                    if (previous == -1) {
+                        previous = 0;
+                    }
+       
+                    var next = data.pageno + 1;
+                        $("#CountryTable").append("<tr><td><button onclick='Edit(" + item.Id + ")'>Edit</button><button onclick='Delete(" + item.Id + ")'>Delete</button></td><td>" + item.Id + "</td><td>" + item.Code + "</td><td>" + item.Name + "</td></tr>");
+                    });
+                }
+            },
+            error: function (message) {
+
+                console.log(message);
+
+
+
+            }
+
+        });
+
+
+    }
+    function Edit(id) {
+        $.ajax({
+            "url": "/Country/FindS?Id=" + id,
+            "method": "Post",
+            success: function (rep) {
+              
+                LoadCountry(0);
+               debugger;
+               console.log(rep);
+                if (rep.Code == 0) {
+
+                    var obj = rep.Message 
+                    $("#Id").val(obj.Id);
+                    $("#Code").val(obj.Code);
+                    $("#Name").val(obj.Name);
+
+
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+    function Delete(id) {
+
+        if (confirm("Are you sure?")) {
+
+            $.ajax({
+
+                "url": "/Country/Delete?id=" + id,
+                "method": "get",
+                success: function (rep) {
+                    console.log(rep);
+                    alert(rep.Message);
+                    LoadCountry(0);
+
+
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+
+
+        }
+
+    }
+
+</script>
+
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-1">
 
     </div>
 
-    <div class ="col-4">
+    <div class="col-4">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <br />
-            <h4><b>Countries</b></h4>
-            <hr />
-            <br />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Code, "CountryCode", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-4">
-
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-5">
-                            <input type="button" id="Save" value="Add" class="btn btn-success" />
-                        </div>
+            <div class="form-horizontal" id="hhhh">
+                <br />
+                <h4><b>Countries</b></h4>
+                <hr />
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Code, "CountryCode", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
                     </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
                     <div class="col-4">
 
                     </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-5">
+                                <input type="button" id="Save" value="Add" class="btn btn-success" />
+                            </div>
+                        </div>
+                        <div class="col-4">
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        }
+    </div>
+
+
+
+    <div class="col-7">
+        <div class="container">
+            <div class="row">
+                <div class="col-1">
+
+                </div>
+                <div class="col-2">
+                    <br />
+                    <button class="btn btn-danger" id="btnRefresh">Refresh</button>
+                </div>
+                <div class="col-7">
+                    <br />
+                    <input type="search" id="txtSearch" value="" />
                 </div>
             </div>
             <br />
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Operations</th>
+                            <th>Id</th>
+                            <th>Code</th>
+                            <th>Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="CountryTable"></tbody>
+                </table>
+
+            </div>
         </div>
-        }
+    </div>
 </div>
+<div class="row">
+
+    <div class="col-4 text-right">
+        @{
+            <a onclick="LoadCountry(previous) " class="btn btn-danger">previous</a>
+            int totaln = (int)TempData.Peek("count");
+            for (int i = 0; i <= totaln / 4; i++)
+            {
+                int total = i + 1;
+                <a onclick="LoadCountry( @i)" class="btn btn-danger">@total</a>
+
+            }
+            <a onclick="LoadCountry(Next)" class="btn btn-danger">Next</a>
+
+        }
+
+
+    </div>
+    <div class="col-4">
+
+    </div>
+
+
 
     <div class="col-4">
 
     </div>
 </div>
-
-    <div class="row">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Operations</th>
-                    <th>Id</th>
-                    <th>Code</th>
-                    <th>Name</th>
-
-                </tr>
-            </thead>
-
-
-        </table>
-    </div>
-
-
-

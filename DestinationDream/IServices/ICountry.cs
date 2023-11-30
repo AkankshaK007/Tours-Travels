@@ -8,12 +8,13 @@ namespace DestinationDream.IServices
 {
     public interface ICountry
     {
-        List<tblCountry> GetAll();
+        dynamic GetAllc(int pageno);
 
-        tblCountry Find(int id);
+        dynamic GetAll(string key);
+        dynamic FindS(int id);
 
         bool Delete(int id);
 
-        bool Save(Countries obj);
+        string Save(Countries obj);
     }
 }

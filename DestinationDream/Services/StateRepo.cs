@@ -4,21 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
 namespace DestinationDream.Services
 {
-    public class CountryRepo :ICountry
+    public class StateRepo : IState
     {
         TravelAgencyEntities db = new TravelAgencyEntities();
-
         public bool Delete(int id)
         {
-
-            var obj = db.tblCountries.Find(id);
+            var obj = db.tblStates.Find(id);
             if (obj != null)
             {
-                db.tblCountries.Remove(obj);
+                db.tblStates.Remove(obj);
                 db.SaveChanges();
                 return true;
             }
@@ -27,67 +24,54 @@ namespace DestinationDream.Services
 
         public dynamic FindS(int id)
         {
-            //var obj = db.tblCountries.Find(id);
-            //return obj;
-
-            var obj = db.tblCountries.Select(s => new { s.Id, s.Code, s.Name }).Where(w => w.Id == id).FirstOrDefault();
+            var obj = db.tblStates.Select(s => new { s.Id, s.Name, s.CountryId }).Where(w => w.Id == id).FirstOrDefault();
             if (obj != null)
             {
-
                 return obj;
             }
             return null;
         }
-        
+
+        public dynamic GetAll(string key)
+        {
+            var objList = db.tblStates.Select(s => new { s.Id, s.Name, CountryId = s.tblCountry.Name }).Where(w => w.Name.Contains(key)).ToList();
+            return objList;
+        }
 
         public dynamic GetAllc(int pageno)
         {
-            var objList = db.tblCountries.Select(s => new { s.Id, s.Name, s.Code }).OrderBy(o=>o.Id).Skip(6* pageno).Take(6).ToList();
-            return objList;
-        }
-        public dynamic GetAll( string key)
-        {
-            var objList = db.tblCountries.Select(s => new { s.Id, s.Name, s.Code }).Where(w=>w.Name.Contains(key)).ToList();
+            var objList = db.tblStates.Select(s => new { s.Id, s.Name, CountryId = s.tblCountry.Name }).OrderBy(o => o.Id).Skip(4 * pageno).Take(4).ToList();
             return objList;
         }
 
-
-       
-        public string Save(Countries obj)
+        public string Save(State obj)
         {
-            
             try
             {
                 if (obj.Id == 0)
                 {
-                    
-                    tblCountry list = new tblCountry();
+                    tblState list = new tblState();
 
-                    //list.Id = obj.Id;
-                    list.Code = obj.Code;
+                    list.Id = 5;
                     list.Name = obj.Name;
-                 
-                    db.tblCountries.Add(list);
+                    list.CountryId = obj.CountryId;
+                    db.tblStates.Add(list);
                     db.SaveChanges();
                     return "Save Successfully";
                 }
                 else
                 {
-                    var o = db.tblCountries.Find(obj.Id);
+                    var o = db.tblStates.Find(obj.Id);
                     o.Id = obj.Id;
-                    o.Code = obj.Code;
                     o.Name = obj.Name;
-                  
-                    db.tblCountries.Attach(o);
+                    o.CountryId = obj.CountryId;
+                    db.tblStates.Attach(o);
                     db.Entry(o).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-
                     return "Updated Successfully";
                 }
-                
-
             }
-            catch (Exception er)
+            catch (Exception)
             {
 
 

@@ -17,6 +17,7 @@ namespace DestinationDream
             
              container.RegisterType<ICities,CitiesRepo>();
              container.RegisterType<ICountry, CountryRepo>();
+            container.RegisterType<IState, StateRepo>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

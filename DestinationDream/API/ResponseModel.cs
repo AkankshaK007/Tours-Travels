@@ -8,7 +8,7 @@ namespace DestinationDream.API
     public class ResponseModel
     {
         public int Code { get; set; }
-
+        public int pageno { get; set; }
         public dynamic Message { get; set; }
     }
 }
