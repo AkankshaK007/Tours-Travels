@@ -133,7 +133,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StateId" Type="Int32" />
     <NavigationProperty Name="tblState" Relationship="TravelAgencyModel.FK_tbl_Cities_tblState" FromRole="tbl_Cities" ToRole="tblState" />
@@ -187,7 +187,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="tblStates" Relationship="TravelAgencyModel.FK_tblState_tblCountries" FromRole="tblCountry" ToRole="tblState" />
@@ -346,7 +346,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CountryId" Type="Int32" />
     <NavigationProperty Name="tbl_Cities" Relationship="TravelAgencyModel.FK_tbl_Cities_tblState" FromRole="tblState" ToRole="tbl_Cities" />

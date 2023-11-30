@@ -230,7 +230,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\APICitiesController.cs" />
     <Compile Include="API\CommonRepo.cs" />
     <Compile Include="API\ResponseModel.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -259,6 +258,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IServices\ICities.cs" />
+    <Compile Include="IServices\ICountry.cs" />
+    <Compile Include="IServices\IState.cs" />
     <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\Cities.cs" />
     <Compile Include="Models\CompanyType.cs" />
@@ -280,6 +281,8 @@
     <Compile Include="Models\TransportServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CitiesRepo.cs" />
+    <Compile Include="Services\CountryRepo.cs" />
+    <Compile Include="Services\StateRepo.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
@@ -403,8 +406,6 @@
     <Content Include="Views\Shared\ChildLayout.cshtml" />
     <Content Include="Views\Shared\FooterLayout.cshtml" />
     <Content Include="Views\Shared\NavbarLayout.cshtml" />
-    <Content Include="Views\Country\Add.cshtml" />
-    <Content Include="Views\State\Add.cshtml" />
     <Content Include="Views\CompanyType\Add.cshtml" />
     <Content Include="Views\RoomType\Add.cshtml" />
     <Content Include="Views\TicketType\Add.cshtml" />
@@ -422,6 +423,8 @@
     <Content Include="Views\TransportCompany\Add.cshtml" />
     <Content Include="Views\TransportServices\Add.cshtml" />
     <Content Include="Views\Cities\Add.cshtml" />
+    <Content Include="Views\Country\Add.cshtml" />
+    <Content Include="Views\State\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -431,7 +434,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\APICities\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
