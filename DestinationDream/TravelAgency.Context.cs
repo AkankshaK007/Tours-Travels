@@ -25,7 +25,6 @@ namespace DestinationDream
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tbl_Cities> tbl_Cities { get; set; }
         public virtual DbSet<tblAgent> tblAgents { get; set; }
         public virtual DbSet<tblCompanyType> tblCompanyTypes { get; set; }
@@ -46,7 +45,5 @@ namespace DestinationDream
         public virtual DbSet<tblTicketType> tblTicketTypes { get; set; }
         public virtual DbSet<tblTransportCompany> tblTransportCompanies { get; set; }
         public virtual DbSet<tblTransportService> tblTransportServices { get; set; }
-
-        public System.Data.Entity.DbSet<DestinationDream.Models.State> States { get; set; }
     }
 }

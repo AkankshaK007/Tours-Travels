@@ -15,9 +15,12 @@ namespace DestinationDream
             // register all your components with the container here
             // it is NOT necessary to register your controllers
             
-             container.RegisterType<ICities,CitiesRepo>();
-             container.RegisterType<ICountry, CountryRepo>();
+            container.RegisterType<ICities,CitiesRepo>();
+            container.RegisterType<ICountry, CountryRepo>();
             container.RegisterType<IState, StateRepo>();
+            container.RegisterType<ICompanyType, CompanyTypeRepo>();
+            container.RegisterType<ITicketType, TicketTypeRepo>();
+
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

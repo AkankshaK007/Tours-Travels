@@ -10,7 +10,8 @@
         LoadCountry(0);
 
         $("#Save").click(function () {
-           
+            LoadCountry(0);
+
             var obj = {
                 "Id": $("#Id").val(),
                 "Code": $("#Code").val(),
@@ -104,7 +105,7 @@
             success: function (rep) {
               
                 LoadCountry(0);
-               debugger;
+         
                console.log(rep);
                 if (rep.Code == 0) {
 
