@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
 namespace DestinationDream.Services
 {
@@ -46,7 +45,6 @@ namespace DestinationDream.Services
             return objList;
         }
 
-        [HttpPost]
         public string Save(TicketType obj)
         {
             try
@@ -55,8 +53,9 @@ namespace DestinationDream.Services
                 {
                     tblTicketType list = new tblTicketType();
 
-                    list.Id = 6;
+                    list.Id = 5;
                     list.Name = obj.Name;
+
                     db.tblTicketTypes.Add(list);
                     db.SaveChanges();
                     return "Save Successfully";
@@ -66,6 +65,7 @@ namespace DestinationDream.Services
                     var o = db.tblTicketTypes.Find(obj.Id);
                     o.Id = obj.Id;
                     o.Name = obj.Name;
+
                     db.tblTicketTypes.Attach(o);
                     db.Entry(o).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
@@ -81,4 +81,4 @@ namespace DestinationDream.Services
 
         }
     }
-}
+    }

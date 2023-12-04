@@ -16,5 +16,6 @@ namespace DestinationDream.IServices
         bool Delete(int id);
 
         string Save(CompanyType obj);
+
     }
 }

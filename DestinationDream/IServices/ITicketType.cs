@@ -7,14 +7,15 @@ using System.Web;
 namespace DestinationDream.IServices
 {
     public interface ITicketType
-    {     
-            dynamic GetAllc(int pageno);
+    {
+        dynamic GetAllc(int pageno);
 
-            dynamic GetAll(string key);
+        dynamic GetAll(string key);
+        dynamic FindS(int id);
 
-            dynamic FindS(int id);
+        bool Delete(int id);
 
-            bool Delete(int id);
-            string Save(TicketType obj);      
+        string Save(TicketType obj);
+
     }
 }

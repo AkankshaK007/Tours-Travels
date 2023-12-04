@@ -75,7 +75,7 @@ namespace DestinationDream.Controllers
 
         }
 
-        [HttpPost]
+       [HttpPost]
         public JsonResult Save(TicketType M)
         {
             ResponseModel res = new ResponseModel();

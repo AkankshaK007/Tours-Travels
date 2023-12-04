@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
 namespace DestinationDream.Services
 {
@@ -36,17 +35,16 @@ namespace DestinationDream.Services
 
         public dynamic GetAll(string key)
         {
-            var objList = db.tblCompanyTypes.Select(s => new { s.Id, s.Name }).Where(w => w.Name.Contains(key)).ToList();
+            var objList = db.tblCompanyTypes.Select(s => new { s.Id, s.Name}).Where(w => w.Name.Contains(key)).ToList();
             return objList;
         }
 
         public dynamic GetAllc(int pageno)
         {
-            var objList = db.tblCompanyTypes.Select(s => new { s.Id, s.Name }).OrderBy(o => o.Id).Skip(4 * pageno).Take(4).ToList();
+            var objList = db.tblCompanyTypes.Select(s => new { s.Id, s.Name}).OrderBy(o => o.Id).Skip(4 * pageno).Take(4).ToList();
             return objList;
         }
 
-        [HttpPost]
         public string Save(CompanyType obj)
         {
             try
@@ -55,8 +53,9 @@ namespace DestinationDream.Services
                 {
                     tblCompanyType list = new tblCompanyType();
 
-                    list.Id = 6;
+                    list.Id = 5;
                     list.Name = obj.Name;
+                  
                     db.tblCompanyTypes.Add(list);
                     db.SaveChanges();
                     return "Save Successfully";
@@ -66,6 +65,7 @@ namespace DestinationDream.Services
                     var o = db.tblCompanyTypes.Find(obj.Id);
                     o.Id = obj.Id;
                     o.Name = obj.Name;
+                    
                     db.tblCompanyTypes.Attach(o);
                     db.Entry(o).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
