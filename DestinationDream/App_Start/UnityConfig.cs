@@ -18,6 +18,7 @@ namespace DestinationDream
             container.RegisterType<ICities,CitiesRepo>();
             container.RegisterType<ICountry, CountryRepo>();
             container.RegisterType<IState, StateRepo>();
+            container.RegisterType<IRoom, RoomRepo>();
             container.RegisterType<ICompanyType, CompanyTypeRepo>();
             container.RegisterType<ITicketType, TicketTypeRepo>();
 
