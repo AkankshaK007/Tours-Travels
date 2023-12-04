@@ -21,9 +21,11 @@ namespace DestinationDream
             container.RegisterType<IRoom, RoomRepo>();
             container.RegisterType<ICompanyType, CompanyTypeRepo>();
             container.RegisterType<ITicketType, TicketTypeRepo>();
+			container.RegisterType<IAgent, AgentRepo>();
 
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+
+			DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

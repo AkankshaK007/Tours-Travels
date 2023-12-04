@@ -1,4 +1,4 @@
-﻿@model DestinationDream.tblAgent
+﻿@model DestinationDream.Models.Agent
 
 @{
     ViewBag.Title = "Add";
@@ -6,87 +6,290 @@
 }
 
 
+<script>
+    $(document).ready(function () {
+        
+        LoadAgent(0);
+
+        $("#Save").click(function () {
+            
+            LoadAgent(0);
+
+            debugger;
+            
+            var obj = {
+                "Id": $("#Id").val(),
+                "AgentCode": $("#AgentCode").val(),
+                "Name": $("#Name").val(),                
+                "MobileNo": $("#MobileNo").val(),
+                                "IsActive": $("#Active").val(),
 
 
+            }
+            console.log(obj);
+            
+            $.ajax({
+
+                "url": "/Agent/Save",
+                "method": "post",
+                "contentType": "application/json",
+                "data": JSON.stringify(obj),
+
+                success: function (data) {
+
+                    console.log( data);
+                    alert(data.Message);
+                    LoadAgent(0);
+                },
+                error: function (err) { console.log(err); }
+            });
 
 
+        });
+
+        $("#btnRefresh").click(function () {
+            LoadAgent(0);
+            
+        });
+
+        $("#txtSearch").keyup(function () {
+            $.ajax(
+                {
+                    "url": "/Agent/GetAll?key=" + $("#txtSearch").val(),
+                    "method": "get",
+                   
+                    success: function (data) {
+                        if (data.Code == 0) {
+                            
+                            $("#AgentTable").empty();
+                            $.each(data.Message, function (index, item) {
+                                $("#AgentTable").append("<tr><td><button onclick='Edit(" + item.Id + ")'>Edit</button><button onclick='Delete(" + item.Id + ")'>Delete</button></td><td>" + item.Id + "</td><td>" + item.AgentCode + "</td><td>" + item.Name + "</td><td>" + item.MobileNo + "</td><td>" + item.IsActive + "</td></tr>");                                
+                            });
+                        }
+                    },
+                    error: function (message)
+                    {
+                        console.log(message);
+                    }
+                }
+            );
+            
+        });
+
+       
+      
+    });
+
+
+    function LoadAgent(pageno) {
+
+        $.ajax({
+
+            "url": "/Agent/GetAllc?pageno=" + pageno,
+            "method": "get",
+            success: function (data) {
+                if (data.Code == 0) {
+                    $("#AgentTable").empty();
+                    $.each(data.Message, function (Add, item) {
+                        previous = data.pageno - 1;
+                        Next = data.pageno + 1;
+                        if (previous == -1) {
+                            previous = 0;
+                        }
+
+                        var next = data.pageno + 1;
+                        $("#AgentTable").append("<tr><td><button onclick='Edit(" + item.Id + ")'>Edit</button><button onclick='Delete(" + item.Id + ")'>Delete</button></td><td>" + item.Id + "</td><td>" + item.AgentCode + "</td><td>" + item.Name + "</td><td>" + item.MobileNo + "</td><td>" + item.IsActive + "</td></tr>");
+                    });
+                }
+            },
+            error: function (message) {
+
+                console.log(message);
+
+            }
+
+        });
+
+
+    }
+    function Edit(id) {
+        
+        $.ajax({
+            "url": "/Agent/FindS?Id=" + id,
+            "method": "Post",
+            success: function (rep) {
+
+               
+                
+                console.log(rep);
+                if (rep.Code == 0) {
+
+                    var obj = rep.Message
+                    $("#Id").val(obj.Id);
+                    $("#AgentCode").val(obj.AgentCode);
+                    $("#Name").val(obj.Name);
+                    $("#MobileNo").val(obj.MobileNo);
+                    $("#IsActive").val(obj.Active);
+
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+    function Delete(id) {
+
+        if (confirm("Are you sure?")) {
+
+            $.ajax({
+
+                "url": "/Agent/Delete?id=" + id,
+                "method": "get",
+                success: function (rep) {
+                    console.log(rep);
+                    alert(rep.Message);
+                    LoadAgent(0);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+    }
+
+</script>
 <div class="row">
-    
-    <div class="col-4 m-5">
+    <div class="col-1">
+
+    </div>
+
+    <div class="col-4">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4><b>Add Agent</b></h4>
             <br />
+            <h4> Add Agent</h4>
+            <br />
+            <hr />
+            @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
                 @Html.LabelFor(model => model.AgentCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-8">
+                <div class="col-md-10">
                     @Html.EditorFor(model => model.AgentCode, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.AgentCode, "", new { @class = "text-danger" })
                 </div>
             </div>
             <br />
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-8">
+                <div class="col-md-10">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>  
             <br />
+
             <div class="form-group">
                 @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-8">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
-                    </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <br />
+
             <div class="form-group">
-                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-8">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.Active , new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-                    </div>
+                <div class="col-md-10">
+                    <select class="form-control" id="Active" name="Active">
+                        <option >Select</option>
+                        <option selected="selected" value="true" id="Active1">Active</option>
+                        <option selected="selected" value="false" id="NotActive1">Not Active</option>
+                    </select>
+                </div>
+
                 </div>
             </div>
             <br />
+
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <input type="submit" value="Add" class="btn btn-success" />
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" id="Save" value="Add" class="btn btn-success" />
                 </div>
             </div>
-        </div>
+       
         }
     </div>
-    <div class="col-7 m-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Operations</th>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Mobile No</th>
-                    <th>Active</th>
 
-                </tr>
-            </thead>
+    <div class="col-7">
+        <div class="container">
+            <div class="row">
+                <div class="col-1">
+
+                </div>
+                <div class="col-2">
+                    <br />
+                    <button class="btn btn-danger" id="btnRefresh">Refresh</button>
+                </div>
+                <div class="col-7">
+                    <br />
+                    <input type="search" id="txtSearch" value="" />
+                </div>
+            </div>
+            <br />
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Operations</th>
+                            <th>Id</th>
+                            <th>AgentCode</th>
+                            <th>Name</th>
+                            <th>MobileNo</th>
+                            <th>Active</th>
 
 
-        </table>
+                        </tr>
+                    </thead>
+                    <tbody id="AgentTable"></tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
 </div>
+<div class="row">
+
+    <div class="col-4 text-right">
+        @{
+            <a onclick="LoadAgent(previous) " class="btn btn-danger">previous</a>
+            int totaln = (int)TempData.Peek("count");
+            for (int i = 0; i <= totaln / 4; i++)
+            {
+                int total = i + 1;
+                <a onclick="LoadAgent( @i)" class="btn btn-danger">@total</a>
+
+            }
+            <a onclick="LoadAgent(Next)" class="btn btn-danger">Next</a>
+
+        }
+
+
+    </div>
+    <div class="col-4">
+
+    </div>
+
+
+
+    <div class="col-4">
+
+    </div>
+</div> 
+
+
